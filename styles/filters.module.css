@@ -1,0 +1,18 @@
+.filtersWrapper {
+    /* width: 18rem;
+    position: relative;*/
+    margin-right: 1rem; 
+    border-right: 1px solid rgb(201, 201, 201);
+    
+}
+
+.filters {
+    width: 18rem;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+}
