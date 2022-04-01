@@ -1,0 +1,30 @@
+.product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.image {
+    height: 10rem;
+    width: 8rem;
+    position: relative;
+    margin-bottom: 1rem;
+}
+.info p {
+    margin: 0;
+}
+
+.title {
+    text-align: left;
+    margin-bottom: .3rem;
+}
+.price {
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+}
+.rating {
+    color: rgb(0, 151, 106);
+}
+
+.delivery {
+    color: rgb(128, 128, 128);
+}

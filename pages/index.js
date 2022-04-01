@@ -1,18 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Products from '../components/products'
+import styles from '../styles/home.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-      </Head>
+    <main className={styles.home}>
 
-      <main className={styles.main}>
-        
-        
-      </main>
-    </div>
+          <h1>EXPLORE</h1> <br />
+
+          <Products />
+
+    </main>
   )
 }

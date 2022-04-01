@@ -1,0 +1,47 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 8rem;
+    border-right: 1px solid rgb(201, 201, 201);
+    padding: 1rem 1rem 1rem 1rem;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    height: 100%;
+    padding-bottom: 10rem;
+}
+
+.links li {
+    list-style: none;
+    text-align: right;
+    letter-spacing: .7px;
+}
+.links li a {
+    color: rgb(80, 80, 80);
+}
+.links li:first-of-type {
+    margin-top: auto;
+}
+.links li:last-of-type {
+    margin-bottom: auto;
+}
+.links li.active a {
+    border-bottom: 2px solid rgb(160, 160, 160);
+    color: black;
+}
+
+.links li:hover a {
+    color: black;
+}
+.footer {
+    align-self: flex-end;
+}
+.footer .cart {
+    font-weight: 500;
+    cursor: pointer;
+}
