@@ -17,6 +17,9 @@
     text-align: left;
     margin-bottom: .3rem;
 }
+.title:hover {
+    color: rgb(44, 81, 202);
+}
 .price {
     font-weight: 500;
     color: rgb(51, 51, 51);
