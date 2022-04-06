@@ -1,25 +1,28 @@
 import mongoose from "mongoose";
-
+const ratingSchema = new mongoose.Schema({
+    rate: Number,
+    count: Number
+})
 const productSchema = new mongoose.Schema({
     title: {
-        type: String, 
+        type: String,
         required: true
     },
     image: {
-        required: true, 
+        required: true,
         type: String
     },
     price: {
         type: Number,
         required: true
     },
-    rating: {
-        type: Number,
-        required: true
+    category: {
+        type: String
     },
-    delivery: {
-        type: String,
-    }
+    description: {
+        type: String
+    },
+    rating:  ratingSchema
 })
 
 const Product = mongoose.models.products || mongoose.model('products', productSchema)

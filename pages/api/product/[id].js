@@ -6,7 +6,8 @@ export default async function handler(req, res) {
 
     const {id} = req.query
 
-    const product = await Product.findOne({_id: id});
+    const product = await Product.findById(id);
+    console.log("FETCHED PRODUCT");
 
     res.json({status: true, product})
 }
