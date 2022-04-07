@@ -21,6 +21,11 @@ export default function NavBar() {
                         Cart{cartCount === 0 ? null : <sup>{cartCount}</sup>}
                     </a></Link>
                 </li>
+                <li className={pathname === '/login' ? `${styles.active}` : ''}>
+                    <Link href={`/login`}><a>
+                        Login
+                    </a></Link>
+                </li>
 
             </div>
         </ul>

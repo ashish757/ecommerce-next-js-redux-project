@@ -1,13 +1,16 @@
 import Image from "next/image"
 import styles from '../../styles/productPage.module.css'
 import { useRouter } from 'next/router'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addToCart } from "../../store/actions/cartActions"
+import { useState } from "react"
 
 export default function ProductPage({product}) {
 
 	const router = useRouter()
 	const dispatch = useDispatch()
+	const cartProducts = useSelector((state) => state.cart.products)
+	const [count, setCount] = useState(1)
 
 	if (router.isFallback) {
 		console.log("FALLBACK");
@@ -15,9 +18,22 @@ export default function ProductPage({product}) {
 	}
 
 	const addToCartHandler = () => {
-		dispatch(addToCart(product._id))
-		// dispatch({type: "ADD_TO_CART", payload: {id: product._id}})
+		dispatch(addToCart({id: product._id, quantity: count}))
 	}
+
+	const countHandler = (e) => {
+		setCount(e.target.value)
+	}
+
+	const countInc = () => setCount(count + 1)
+	const countDec = () => setCount(count > 1 ? count - 1: count)
+	let isCarted;
+	cartProducts.forEach(cartProduct => {
+		if (cartProduct.id === product._id) {
+			isCarted = true
+			return 
+		}
+	})
 
     // console.log(product);
 
@@ -33,11 +49,12 @@ export default function ProductPage({product}) {
 		</div>
 		<div className={styles.actions}>
 			<div className={styles.quantity}>
-				<button>-</button>
-				<p>0</p>
-				<button>+</button>
+				<button onClick={countDec}>-</button>
+				<input type="text" value={count} onChange={countHandler}></input>
+				<button onClick={countInc}>+</button>
 			</div>
-			<button className={styles.btn} onClick={addToCartHandler}>Add to Cart</button>
+		
+			<button className={styles.btn} onClick={addToCartHandler}>{isCarted ? "Added to Cart" : "Add to Cart"}</button>
 			<button className={styles.btn}>Buy Now</button>
 		</div>
 	</main>

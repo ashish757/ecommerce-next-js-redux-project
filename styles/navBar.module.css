@@ -41,11 +41,11 @@
 .footer {
     align-self: flex-end;
 }
-.footer .cart {
+.footer li {
     font-weight: 500;
     cursor: pointer;
 }
-.cart sup {
+.footer sup {
     background-color: rgb(53, 53, 53);
     color: rgb(255, 255, 255);
     padding: 0rem .3rem;

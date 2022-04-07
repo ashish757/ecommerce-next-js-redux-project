@@ -61,11 +61,11 @@
     height: 3rem;
     background-color: rgb(230, 230, 230);
 }
-.actions .quantity p{
-    flex-grow: 1;
-    height: 100%;
+.actions .quantity input{
+    width: 50%;
+    border: none;
+    font-size: 1.6rem;
     text-align: center;
-    font-size: 1.7rem;
 }
 .actions .quantity button{
     height: 100%;
