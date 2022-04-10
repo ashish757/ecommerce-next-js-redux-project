@@ -1,7 +1,13 @@
 import User from "../../../models/user"
 import connectDb from "../../../utils/mongodb"
+import sessionOptions from "../../../utils/sessionOptions"
+import { withIronSessionApiRoute } from 'iron-session/next'
 
-export default async function handler(req, res) {
+
+export default withIronSessionApiRoute(handler, sessionOptions)
+
+
+async function handler(req, res) {
     await connectDb()
     if (req.method === "POST") {
 
@@ -11,21 +17,23 @@ export default async function handler(req, res) {
         if (user) {
 
             if (user.password === password) {
-                // console.log(req.headers);
-                res.setHeader('set-cookie',`auth=${user._id}`)
-                return res.json({status: true})
+                req.session.user = { id: user._id}
+
+                await req.session.save()
+                console.log(req.session);
+                return res.json({status: true, user: {username: user.username, id: user._id}})
             } else {
-                return res.json({status: false, msg: "invalid password"})
+                return res.json({status: false, message: "invalid password"})
             }
 
         } else {
-            res.json({status: false, msg: 'no user found'})
+            res.json({status: false, message: 'no user found'})
 
         }
 
 
         
     } else {
-        res.json({status: false, msg: "invalid request type"})
+        res.json({status: false, message: "invalid request type"})
     }
 }

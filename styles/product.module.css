@@ -4,9 +4,8 @@
     align-items: center;
 }
 .image {
-    height: 10rem;
-    width: 8rem;
-    position: relative;
+    /* height: 10rem;
+    width: 8rem; */
     margin-bottom: 1rem;
 }
 .info p {

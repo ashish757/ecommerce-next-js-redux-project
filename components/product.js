@@ -2,13 +2,14 @@ import styles from '../styles/product.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Product({product}) {
+export default function Product({ product }) {
     return <div className={styles.product}>
         <Link href={`/product/${product._id}`}>
             <a> <div className={styles.image}>
 
-                    <Image src={product.image} layout='fill' alt='apple ' />
-                </div>  </a>
+                <Image src={product.image} alt='apple' priority width={160}
+                    height={180} objectFit="contain" />
+            </div>  </a>
         </Link>
         <div className={styles.info}>
             <Link href={`/product/${product._id}`}>

@@ -18,7 +18,7 @@ export default function ProductPage({product}) {
 	}
 
 	const addToCartHandler = () => {
-		dispatch(addToCart({id: product._id, quantity: count}))
+		dispatch(addToCart({id: product._id, product: product, quantity: count}))
 	}
 
 	const countHandler = (e) => {
@@ -27,15 +27,17 @@ export default function ProductPage({product}) {
 
 	const countInc = () => setCount(count + 1)
 	const countDec = () => setCount(count > 1 ? count - 1: count)
-	let isCarted;
-	cartProducts.forEach(cartProduct => {
-		if (cartProduct.id === product._id) {
-			isCarted = true
-			return 
-		}
-	})
+	let isCarted = false;
+	// cartProducts.forEach(cartProduct => {
+	// 	if (cartProduct.id === product._id) {
+	// 		isCarted = true
+	// 		return 
+	// 	}
+	// })
 
-    // console.log(product);
+
+
+    console.count('PRODUCT RENDERD');
 
 
 	return <main className={styles.page}>
@@ -74,7 +76,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-	const res = await fetch("http://localhost:3000/api/product/" + context.params.productId)
+	const res = await fetch("http://localhost:3000/api/products/" + context.params.productId)
 	const product = await res.json()
 
 	return {

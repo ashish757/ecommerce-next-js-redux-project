@@ -1,19 +1,27 @@
 import { Provider } from 'react-redux'
 import NavBar from '../components/navBar'
-import store from '../store'
+import storeFn from '../store'
 import '../styles/globals.css'
+import { PersistGate } from 'redux-persist/integration/react'
+
 
 function MyApp({ Component, pageProps }) {
+
+  const {store, persistor} = storeFn()
+
   return (
     <Provider store={store}>
 
-      <div id='mainWrapper'>
+      <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}>
+        <div id='mainWrapper'>
 
-        <NavBar />
-        <div style={{ marginLeft: '8rem', flexGrow: 1 }}>
-          <Component {...pageProps} />
+          <NavBar />
+          <div style={{ marginLeft: '8rem', flexGrow: 1 }}>
+            <Component {...pageProps} />
+          </div>
         </div>
-      </div>
+      </PersistGate>
+
     </Provider>
   )
 }

@@ -1,5 +1,5 @@
-import Product from "../../models/product"
-import connectDb from "../../utils/mongodb"
+import Product from "../../../models/product"
+import connectDb from "../../../utils/mongodb"
 
 export default async function handler(req, res) {
     await connectDb()

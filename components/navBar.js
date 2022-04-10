@@ -3,11 +3,15 @@ import styles from '../styles/navBar.module.css'
 import { useRouter } from 'next/router'
 import { useSelector } from "react-redux"
 
-
 export default function NavBar() {
+
     const cartCount = useSelector((state) => state.cart.count)
+    const isAuth = useSelector((state) => state.auth.isAuth)
 
     const { pathname } = useRouter()
+
+
+    console.count("NAV RENDERED")
 
     return <nav className={styles.nav}>
 
@@ -21,11 +25,23 @@ export default function NavBar() {
                         Cart{cartCount === 0 ? null : <sup>{cartCount}</sup>}
                     </a></Link>
                 </li>
-                <li className={pathname === '/login' ? `${styles.active}` : ''}>
-                    <Link href={`/login`}><a>
-                        Login
-                    </a></Link>
-                </li>
+
+
+                {
+                    isAuth ? (
+                        <li className={pathname === '/account' ? `${styles.active}` : ''}>
+                            <Link href={`/account`}><a>
+                                Account
+                            </a></Link>
+                        </li>
+                    ) : (
+                        <li className={pathname === '/login' ? `${styles.active}` : ''}>
+                            <Link href={`/login`}><a>
+                                Login
+                            </a></Link>
+                        </li>
+                    )
+                }
 
             </div>
         </ul>
