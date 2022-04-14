@@ -2,11 +2,12 @@
     /* width: 18rem;
     position: relative;*/
     margin-right: 1rem; 
+    padding-right: 1rem;
     border-right: 1px solid rgb(201, 201, 201);
     
 }
 
-.filters {
+.filtersNav {
     width: 18rem;
     height: 100vh;
     position: sticky;
@@ -14,5 +15,11 @@
     left: 0;
     bottom: 0;
     right: 0;
+}
 
+.filters{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: .5rem 0rem;
 }

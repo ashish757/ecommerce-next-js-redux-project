@@ -18,7 +18,7 @@ const cartReducer = (state = authState, action) => {
             return {
                 ...state,
                 isAuth: false,
-                userId: null
+                userId: null,
             }
     
         default:

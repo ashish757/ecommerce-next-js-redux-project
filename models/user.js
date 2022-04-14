@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+// const cartSchema = new mongoose.Schema({
+//     product: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: "products"
+//     },
+//     quantity: Number
+// })
+
 const usersSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -9,10 +17,14 @@ const usersSchema = new mongoose.Schema({
         required: true,
         type: String
     },
-    cart: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "products"
-    }
+    cartCount: Number,
+    cart: [{
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "products"
+        },
+        quantity: Number
+    }] 
 })
 
 const User = mongoose.models.users || mongoose.model('users', usersSchema)

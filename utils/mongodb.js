@@ -4,7 +4,7 @@ let connection = null
 
 const connectDb = async () => {
     if (connection) {
-        console.log("used existing connection");
+        // console.log("used existing connection");
         return connection
     } 
 

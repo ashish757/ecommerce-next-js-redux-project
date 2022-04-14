@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Products from "../components/products"
+import { loadCart } from "../store/actions/cartActions"
 
 export default function Cart() {
 
-    const [products, setProducts] = useState(null)
+    const cartItems = useSelector(state => state.cart.cartItems)
+    const dispatch = useDispatch()
 
     useEffect(() =>{
+        console.log("mounted");
         const fetchData  = async () => {
             const req = await fetch("/api/cart/products")
             const res = await req.json()
-            if( res.status) setProducts(res.products)
+            // console.log("cartPRo",res);
+
+            if(res.status) dispatch(loadCart({cartItems: res.products}))
         }
 
         fetchData()
@@ -17,8 +23,7 @@ export default function Cart() {
 
     return <main>
         <h1>CART</h1>
-        {   products &&
-            <Products products={products}/>
+        {   cartItems.length ? <Products products={cartItems} cart/> : <h1 style={{marginTop: '3rem', color: "gray"}}>No Products in your cart yet . </h1>
         }
     </main>
 

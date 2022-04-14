@@ -1,7 +1,9 @@
 import Link from "next/link"
 import styles from '../styles/navBar.module.css'
 import { useRouter } from 'next/router'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useCallback, useEffect } from "react"
+import { loadCartCount } from '../store/actions/cartActions'
 
 export default function NavBar() {
 
@@ -9,6 +11,27 @@ export default function NavBar() {
     const isAuth = useSelector((state) => state.auth.isAuth)
 
     const { pathname } = useRouter()
+    const dispatch = useDispatch()
+
+    const fetchCartCount = useCallback(async () => {
+        const req = await fetch("/api/cart/getCartCount")
+        const res = await req.json()
+        console.log("GOT CART COUNT");
+        
+        if (res.status) dispatch(loadCartCount({ cartCount: res.cartCount }))
+
+    }, [])
+
+    useEffect(() => {
+        fetchCartCount()
+    }, [])
+
+    // useEffect(() => {
+    //     if (cartCount === null) {
+    //         console.log(cartCount);
+    //         fetchCartCount()
+    //     }
+    // }, )
 
 
     console.count("NAV RENDERED")
@@ -22,7 +45,7 @@ export default function NavBar() {
 
                 <li className={pathname === '/cart' ? `${styles.active} ${styles.cart}` : styles.cart}>
                     <Link href={`/cart`}><a>
-                        Cart{cartCount === 0 ? null : <sup>{cartCount}</sup>}
+                        Cart{cartCount ? <sup>{cartCount}</sup> : null}
                     </a></Link>
                 </li>
 

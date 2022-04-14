@@ -15,6 +15,7 @@ let composeEnhancers =  typeof window === 'undefined' ? compose : window.__REDUX
 const persistConfig = {
   key: 'root',
   storage,
+  // blacklist: ['filters'] 
 }
  
 const persistedReducer = persistReducer(persistConfig, rootReducer)
