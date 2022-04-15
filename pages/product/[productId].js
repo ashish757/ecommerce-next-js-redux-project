@@ -25,11 +25,11 @@ export default function ProductPage({ product }) {
 			})
 		}
 		
-	}, [cartItems, router.isFallback])
+	}, [cartItems, product._id, router.isFallback])
 
 	if (router.isFallback) {
 		console.log("FALLBACK");
-		return <h1>Loading...</h1>
+		return <h1>Fallback Loading...</h1>
 	}
 	
 

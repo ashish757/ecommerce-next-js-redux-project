@@ -18,21 +18,30 @@ export default function Home(props) {
 
 
   useEffect(() => {
-    if (router.query.category) {
-      // works only when mounted 
-      // set active filters according to the url
-      console.log("SET ACTIVE FILTERS ACCORDING TO URL");
-      const parsedCategory = JSON.parse(router.query.category)
-      console.log(parsedCategory);
-      dispatch(activeFilter({ filterId: parsedCategory }))
-      
-    } 
+    
+    if (router.query) {
+      console.log("SET ACTIVE FILTERS BY URL");
+      let activeCategory = []
+
+      // console.log("CATEGORY OUTSIDE", router.query );
+      Object.keys(router.query).forEach(category => {
+        // console.log("CATEGORY", category, router.query );
+        activeCategory.push({ category, filters:  JSON.parse(router.query[category])})
+      })
+
+      // console.log("PARSEED QUERY", activeCategory);
+
+      dispatch(activeFilter({ loadFromURL: activeCategory }))
+
+    }
     else {
-      dispatch(activeFilter({ filterId: [] }))
+    if (!router.isReady) return
+      console.log("CLEARED ALL ACTIVE FILTERES");
+      dispatch(activeFilter({ loadFromURL: [] }))
 
     }
 
-  }, [dispatch, router.query.category])
+  }, [dispatch, router.query, router.query.category])
 
 
 

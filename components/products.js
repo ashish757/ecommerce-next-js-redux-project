@@ -1,30 +1,40 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styles from '../styles/products.module.css'
 import Product from './product'
 import { useRouter } from 'next/router'
+import useActiveFilters from '../hooks/useActiveFilters'
 
 export default function Products({ products, cart }) {
     const [fetchedProducts, setFetchedProducts] = useState(products)
 
     const router = useRouter()
 
-    const filters = useSelector(state => state.filters.filters)
+    const filterCategories = useSelector(state => state.filters.filterCategories)
+    const activeFilters = useActiveFilters(filterCategories)
+    // const activeFilters = useCallback(useActiveFilters(filterCategories), [filterCategories])
+
 
     useEffect(() => {
-        const activeFilters = filters.filter(filter => filter.active)
-        const activeFilterIds = activeFilters.map(filter => filter._id)
-        const activeFilterNames = activeFilters.map(filter => filter.filter)
-
         console.log("FETCH DATA");
         const fetchProducts = async () => {
+
+            let filters = {}
+            activeFilters.getValues().forEach(category => {
+                if (category.category === "rating") {
+                    filters[category.category] = parseInt(category.filters[0])
+                } else {
+                    filters[category.category] = category.filters
+                }
+            })
+
             const req = await fetch("/api/filters/filter", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    category: activeFilterNames
+                    filters
                 })
             })
             const res = await req.json()
@@ -32,20 +42,40 @@ export default function Products({ products, cart }) {
             if (res.status) setFetchedProducts(res.products)
         }
 
-        if (activeFilterIds.length !== 0) fetchProducts()
+        if (activeFilters.getIds().length !== 0) fetchProducts()
         else setFetchedProducts(products)
-        
-        
-        if (window) {
-            if (activeFilterIds.length === 0) {
+
+    }, [filterCategories, products])
+
+    useEffect(() => {
+        if (window && router.isReady) {
+
+            // console.log("NO ACTIVE", activeFilters.getIds());
+
+            if (activeFilters.getIds().length === 0) {
+                console.log("NO ACTIVE FILTERS TO SET URL");
                 window.history.replaceState({ ...window.history.state, as: "/", url: "/" }, '', "/")
                 return
             }
-                const newUrl = `/?category=${JSON.stringify(activeFilterIds)}`
-                window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
+
+            let newUrl = '';
+            let isFirst = true
+            console.log("activeFilters.getIds()", activeFilters.getIds());
+            activeFilters.getIds().forEach(activeCategory => {
+                if (isFirst) {
+                    newUrl += `/?${activeCategory.category}=${JSON.stringify(activeCategory.activeIds)}`
+                    isFirst = false
+                } else {
+                    if (activeCategory.activeIds.length === 0) return
+                    newUrl += `&${activeCategory.category}=${JSON.stringify(activeCategory.activeIds)}`
+                }
+            })
+
+            console.log("SAT URL BY ACTIVE FILTERS");
+            window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
         }
 
-    }, [filters])
+    }, [filterCategories, products, router.isReady])
 
 
     return <div className={styles.products}>

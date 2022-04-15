@@ -1,43 +1,95 @@
 const filterState = {
-    filters: []
+    filterCategories: []
 }
 
 const cartReducer = (state = filterState, action) => {
     switch (action.type) {
         case "LOAD_FILTERS":
-            console.log("LOAD FILTERS", state.filters, action.payload.filters);
+            console.log("LOAD FILTERS", state.filterCategories, action.payload.filters);
             return {
                 ...state,
-                filters: action.payload.filters
+                filterCategories: action.payload.filters
             }
 
         case "ACTIVE_FILTER":
-            const newFilters = state.filters.map(filter => {
-                if (Array.isArray(action.payload.filterId)) {
 
-                    if (action.payload.filterId.includes(filter._id)) {
+            const newFilterCategories = state.filterCategories.map(filterCategory => {
 
-                        return { ...filter, active: true }
-                    } else {
-                        return { ...filter, active: false }
+
+
+                if (action.payload.loadFromURL) {
+
+                    if (action.payload.loadFromURL.length === 0) {
+                        const newFilters = filterCategory.filters.map(filter => {
+                            if (filter.active) return { ...filter, active: false }
+                            return filter
+
+                        })
+
+                        return { ...filterCategory, filters: newFilters }
                     }
 
-                }
-                
-                if (filter._id === action.payload.filterId) {
-                    if (filter.active) {
-                        return { ...filter, active: false }
-                    }
-                    return { ...filter, active: true }
+                    let currentRV;
+                    action.payload.loadFromURL.some(obj => {
+                        if (obj.category === filterCategory.category) {
+                            const newFilters = filterCategory.filters.map(filter => {
+                                // console.log("URL ACTIVE", obj.filters);
+                                // console.log("LOADING FROM URL", filter);
+                                    if (obj.filters.includes(filter._id)) {
+                                        // obj.filter = filter._id
+                                        // console.log("ACTIVATED", filter._id);
+                                        return { ...filter, active: true }
+                                    } else {
+                                        // console.log("DEACTIVATED", filter._id);
+                                        return { ...filter, active: false }
+                                    }
+
+                            })
+
+                            currentRV = { ...filterCategory, filters: newFilters }
+                            return true
+                        }
+                    })
+                    if (currentRV) return currentRV
                 }
 
+                if (filterCategory._id === action.payload.categoryId) {
 
-                return filter
+                    const newFilters = filterCategory.filters.map(filter => {
+                        // special chek for if its a rating filter
+                        if (filterCategory.category === "rating") {
+                            // if its rating filter deactivate all other than the one which is clicked right now
+                            if (filter._id === action.payload.filterId) {
+                                if (filter.active) {
+                                    return { ...filter, active: false }
+                                }
+                                return { ...filter, active: true }
+                            }
+                            return { ...filter, active: false }
+                        } else if (filter._id === action.payload.filterId) {
+
+                            if (filter.active) {
+                                return { ...filter, active: false }
+                            }
+                            return { ...filter, active: true }
+
+                        } else {
+                            return filter
+                        }
+                    })
+
+                    return { ...filterCategory, filters: newFilters }
+                }
+
+                return filterCategory
             })
+
+
+            console.log("NEW FILTERS", newFilterCategories);
 
             return {
                 ...state,
-                filters: newFilters
+                filterCategories: newFilterCategories
             }
 
         default:
