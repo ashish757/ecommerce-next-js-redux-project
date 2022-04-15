@@ -5,11 +5,14 @@ const filterState = {
 const cartReducer = (state = filterState, action) => {
     switch (action.type) {
         case "LOAD_FILTERS":
-            console.log("LOAD FILTERS", state.filterCategories, action.payload.filters);
-            return {
+            const RV = {
                 ...state,
                 filterCategories: action.payload.filters
             }
+
+            console.log("LOADING FILTERS", RV);
+
+            return RV   
 
         case "ACTIVE_FILTER":
 
@@ -35,14 +38,14 @@ const cartReducer = (state = filterState, action) => {
                             const newFilters = filterCategory.filters.map(filter => {
                                 // console.log("URL ACTIVE", obj.filters);
                                 // console.log("LOADING FROM URL", filter);
-                                    if (obj.filters.includes(filter._id)) {
-                                        // obj.filter = filter._id
-                                        // console.log("ACTIVATED", filter._id);
-                                        return { ...filter, active: true }
-                                    } else {
-                                        // console.log("DEACTIVATED", filter._id);
-                                        return { ...filter, active: false }
-                                    }
+                                if (obj.filters.includes(filter._id)) {
+                                    // obj.filter = filter._id
+                                    // console.log("ACTIVATED", filter._id);
+                                    return { ...filter, active: true }
+                                } else {
+                                    // console.log("DEACTIVATED", filter._id);
+                                    return { ...filter, active: false }
+                                }
 
                             })
 

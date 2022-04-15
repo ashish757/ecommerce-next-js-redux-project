@@ -26,16 +26,17 @@ const persistConfig = {
   blacklist: ['filters'] 
 }
 
-const filtersPersistConfig = {
-  key: 'auth',
-  storage: sessionStorage,
-}
+// const filtersPersistConfig = {
+//   key: 'filters',
+//   storage: sessionStorage,
+// }
 
 
 const rootReducer = combineReducers({
   cart: cartReducer,
   auth: authReducer,
-  filters: persistReducer(filtersPersistConfig, filterReducer),
+  filters: filterReducer
+  // filters: persistReducer(filtersPersistConfig, filterReducer),
 })
  
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -13,18 +13,18 @@ export default function NavBar() {
     const { pathname } = useRouter()
     const dispatch = useDispatch()
 
-    const fetchCartCount = useCallback(async () => {
-        const req = await fetch("/api/cart/getCartCount")
-        const res = await req.json()
-        console.log("GOT CART COUNT");
+    // const fetchCartCount = useCallback(async () => {
+    //     const req = await fetch("/api/cart/getCartCount")
+    //     const res = await req.json()
+    //     console.log("GOT CART COUNT");
         
-        if (res.status) dispatch(loadCartCount({ cartCount: res.cartCount }))
+    //     if (res.status) dispatch(loadCartCount({ cartCount: res.cartCount }))
 
-    }, [])
+    // }, [])
 
-    useEffect(() => {
-        fetchCartCount()
-    }, [])
+    // useEffect(() => {
+    //     fetchCartCount()
+    // }, [])
 
     // useEffect(() => {
     //     if (cartCount === null) {

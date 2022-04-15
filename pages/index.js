@@ -10,6 +10,8 @@ import styles from '../styles/home.module.css'
 
 export default function Home(props) {
   const dispatch = useDispatch()
+  const filterCategories = useSelector(state => state.filters.filterCategories)
+
   const router = useRouter()
 
   // const filters = useSelector(state => state.filters.filters)
@@ -19,8 +21,7 @@ export default function Home(props) {
 
   useEffect(() => {
     
-    if (router.query) {
-      console.log("SET ACTIVE FILTERS BY URL");
+    if (Object.keys(router.query).length > 0 && filterCategories.length > 0) {
       let activeCategory = []
 
       // console.log("CATEGORY OUTSIDE", router.query );
@@ -30,18 +31,19 @@ export default function Home(props) {
       })
 
       // console.log("PARSEED QUERY", activeCategory);
+      console.log("SET ACTIVE FILTERS BY URL loadFromURL:", activeCategory);
 
       dispatch(activeFilter({ loadFromURL: activeCategory }))
 
     }
-    else {
-    if (!router.isReady) return
-      console.log("CLEARED ALL ACTIVE FILTERES");
-      dispatch(activeFilter({ loadFromURL: [] }))
+    // else {
+    // if (!router.isReady) return
+    //   console.log("CLEARED ALL LOCAL ACTIVE FILTERES");
+    //   dispatch(activeFilter({ loadFromURL: [] }))
 
-    }
+    // }
 
-  }, [dispatch, router.query, router.query.category])
+  }, [dispatch, filterCategories.length, router.isReady, router.query, router.query.category])
 
 
 

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react'
+import { useEffect,  useState } from 'react'
 import { useSelector } from 'react-redux'
 import styles from '../styles/products.module.css'
 import Product from './product'
@@ -16,8 +16,8 @@ export default function Products({ products, cart }) {
 
 
     useEffect(() => {
-        console.log("FETCH DATA");
         const fetchProducts = async () => {
+            console.log("FETCHING FILTERED PRODUCTS", activeFilters.getIds());
 
             let filters = {}
             activeFilters.getValues().forEach(category => {
@@ -48,22 +48,21 @@ export default function Products({ products, cart }) {
     }, [filterCategories, products])
 
     useEffect(() => {
-        if (window && router.isReady) {
+        if (window && router.isReady && filterCategories.length > 0) {
 
             // console.log("NO ACTIVE", activeFilters.getIds());
 
-            if (activeFilters.getIds().length === 0) {
+            if (activeFilters.getIds().length === 0 && activeFilters.getFilters().length !== 0) {
                 console.log("NO ACTIVE FILTERS TO SET URL");
                 window.history.replaceState({ ...window.history.state, as: "/", url: "/" }, '', "/")
                 return
             }
 
-            let newUrl = '';
+            let newUrl = '/';
             let isFirst = true
-            console.log("activeFilters.getIds()", activeFilters.getIds());
             activeFilters.getIds().forEach(activeCategory => {
                 if (isFirst) {
-                    newUrl += `/?${activeCategory.category}=${JSON.stringify(activeCategory.activeIds)}`
+                    newUrl += `?${activeCategory.category}=${JSON.stringify(activeCategory.activeIds)}`
                     isFirst = false
                 } else {
                     if (activeCategory.activeIds.length === 0) return
@@ -71,7 +70,7 @@ export default function Products({ products, cart }) {
                 }
             })
 
-            console.log("SAT URL BY ACTIVE FILTERS");
+            console.log("SAT URL BY ACTIVE FILTERS  activeFilters.getIds():", activeFilters.getIds());
             window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
         }
 
