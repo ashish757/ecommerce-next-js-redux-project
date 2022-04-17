@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     domains: ['fakestoreapi.com'],
   },
-  swcMinify: false // it should be false by default 
+  // swcMinify: false // it should be false by default 
 }
 
 module.exports = nextConfig
