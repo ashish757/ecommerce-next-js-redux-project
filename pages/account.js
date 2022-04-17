@@ -9,7 +9,7 @@ export default function Account() {
     const router = useRouter()
     const logoutHandler = async () => {
 
-        const req = await fetch("/api/auth/logout", {
+        const req = await fetch("http://localhost:3000/api/auth/logout", {
             method: 'DELETE'
         })
         const res = await req.json()

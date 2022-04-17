@@ -7,7 +7,7 @@ import { removeFromCart } from '../store/actions/cartActions'
 export default function Product({ product, quantity, cart }) {
     const dispatch = useDispatch()
     const deleteItem = async () => {
-        const req = await fetch("/api/cart/removeFromCart", {
+        const req = await fetch("http://localhost:3000/api/cart/removeFromCart", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

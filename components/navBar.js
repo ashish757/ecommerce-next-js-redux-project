@@ -14,7 +14,7 @@ export default function NavBar() {
     const dispatch = useDispatch()
 
     // const fetchCartCount = useCallback(async () => {
-    //     const req = await fetch("/api/cart/getCartCount")
+    //     const req = await fetch("http://localhost:3000/api/cart/getCartCount")
     //     const res = await req.json()
     //     console.log("GOT CART COUNT");
         

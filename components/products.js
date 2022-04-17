@@ -28,7 +28,7 @@ export default function Products({ products, cart }) {
                 }
             })
 
-            const req = await fetch("/api/filters/filter", {
+            const req = await fetch("http://localhost:3000/api/filters/filter", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

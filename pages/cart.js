@@ -11,7 +11,7 @@ export default function Cart() {
     useEffect(() =>{
         console.log("mounted");
         const fetchData  = async () => {
-            const req = await fetch("/api/cart/products")
+            const req = await fetch("http://localhost:3000/api/cart/products")
             const res = await req.json()
             // console.log("cartPRo",res);
 

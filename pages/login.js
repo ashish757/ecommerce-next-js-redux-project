@@ -14,7 +14,7 @@ export default function Login() {
     }
 
     const loginHandler = async () => {
-        const req  = await fetch("/api/auth/login", {
+        const req  = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

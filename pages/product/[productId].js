@@ -35,7 +35,7 @@ export default function ProductPage({ product }) {
 
 	const addToCartHandler = async () => {
 
-		const req = await fetch('/api/cart/addToCart', {
+		const req = await fetch('http://localhost:3000/api/cart/addToCart', {
 			method: "POST",
 			headers: {
 				"Content-Type": 'application/json'
@@ -100,7 +100,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-	const res = await fetch("/api/products/" + context.params.productId)
+	const res = await fetch("http://localhost:3000/api/products/" + context.params.productId)
 	const product = await res.json()
 
 	return {
