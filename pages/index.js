@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Filters from '../components/filters'
 import Products from '../components/products'
 import { activeFilter } from '../store/actions/filterActions'
-import styles from '/styles/home.module.css'
+import styles from '../styles/Home.module.css'
 
 
 export default function Home(props) {
