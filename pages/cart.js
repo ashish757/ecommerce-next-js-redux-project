@@ -6,7 +6,7 @@ import { loadCart } from "../store/actions/cartActions"
 export default function Cart() {
 
     const cartItems = useSelector(state => state.cart.cartItems)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() 
 
     useEffect(() =>{
         console.log("mounted");
@@ -20,6 +20,7 @@ export default function Cart() {
 
         fetchData()
     }, [])
+
 
     return <main>
         <h1>CART</h1>
