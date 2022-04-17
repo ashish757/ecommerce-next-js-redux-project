@@ -66,7 +66,7 @@ export default function Home(props) {
 
 
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:3000/api/products/allProducts")
+  const res = await fetch("/api/products/allProducts")
   const products = await res.json()
 
   return {
